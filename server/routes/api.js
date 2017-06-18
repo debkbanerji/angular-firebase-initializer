@@ -70,13 +70,20 @@ readDir(templateFolder, '/');
 router.get('/test', function (req, res) {
 
     let config = {
-        firebaseConfig: "FIREBASE CONFIG HERE",
+        firebaseConfig: `{
+  apiKey: 'YOUR_API_KEY_HERE',
+  authDomain: 'YOUR_AUTH_DOMAIN_HERE',
+  databaseURL: 'YOUR_DATABASE_URL_HERE',
+  projectId: 'YOUR_PROJECT_ID_HERE',
+  storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
+  messagingSenderId: 'YOUR_MESSENGER_SENDER_ID_HERE'
+}`,
         firebaseConfigLocation: "src/app/config/firebase-config.ts",
-        author: "Deb",
-        projectName: "Apple Timer",
-        projectNameCamelCase: "AppleTimer",
-        projectNameKebabCase: "apple-timer",
-        projectDescription: "A Better Timer (well, not really)"
+        author: "Deb K Banerji",
+        projectName: "Test Project",
+        projectNameCamelCase: "TestProject",
+        projectNameKebabCase: "test-project",
+        projectDescription: "Testing the initializer"
     };
 
     res.set('Content-Type', 'application/zip');
@@ -98,7 +105,6 @@ function archiveFilesRecursively(archive, files, index, config) {
     if (index < files.length) {
         let file = files[index];
         if (file.template) { // text file - process template
-            console.log("Rendering " + path.join(file.path, file.name));
             let output = mustache.render(file.template, config);
             archive.entry(output, {name: path.join(file.path, file.name)}, function () {
                 archiveFilesRecursively(archive, files, index + 1, config);
@@ -110,6 +116,8 @@ function archiveFilesRecursively(archive, files, index, config) {
         }
     } else {
         archive.finalize();
+        // TODO: Save record of config?
+        console.log("Created " + config.projectName)
     }
 }
 
