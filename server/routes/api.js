@@ -7,56 +7,93 @@ const router = express.Router();
 
 /* GET api listing. */
 router.get('/', function (req, res) {
-  res.send('api works');
+    res.send('api works');
 });
 
 
 const testFolder = './test_template';
+const templateFolder = './templates';
 
-fs.readdir(testFolder, (err, files) => {
-  files.forEach(file => {
-    console.log(file);
-    fs.readFile(path.join(testFolder, file), 'utf8', (err, data) => {
-      if (err) throw err;
-      console.log(data);
+// fs.readdir(testFolder, (err, files) => {
+//     files.forEach(file => {
+//         console.log(file);
+//         fs.readFile(path.join(testFolder, file), 'utf8', (err, data) => {
+//             if (err) throw err;
+//             console.log(data);
+//         });
+//     });
+// });
+
+fileSet = new Set();
+
+// Process directory and add each file to set
+function readDir(dir) {
+    console.log(dir);
+    fs.readdir(dir, (err, files) => {
+        files.forEach(file => {
+            let fullPath = path.join(dir, file);
+            if (fs.statSync(fullPath).isDirectory()) {
+                // The file is a directory
+                readDir(fullPath);
+            } else {
+                // Process file
+                fs.readFile(fullPath, 'utf8', function (err, data) {
+                    if (err) throw err;
+                    console.log('read ' + fullPath);
+                    // console.log(data);
+                });
+            }
+        });
     });
-  });
-});
+}
+
+// Add file to set
+function readFile(name, fullPath, content) {
+
+}
+
+readDir(templateFolder);
 
 router.get('/test', function (req, res) {
 
-  res.set('Content-Type', 'application/zip');
-  res.set('Content-Disposition', 'attachment; filename=response-file.zip');
+    res.set('Content-Type', 'application/zip');
+    res.set('Content-Disposition', 'attachment; filename=response-file.zip');
 
-  var ZipStream = require('zip-stream');
-  var zip = new ZipStream();
+    var ZipStream = require('zip-stream');
+    var zip = new ZipStream();
 
-  zip.on('error', function (err) {
-    throw err;
-  });
+    zip.on('error', function (err) {
+        throw err;
+    });
 
-  zip.pipe(res);
+    zip.pipe(res);
 
-  // items.forEach(function (item) {
-  //
-  //   wait.for(function (next) {
-  //
-  //     var path = storage.getItemPath(req.Box, item);
-  //     var source = "ABCDEFG"
-  //
-  //     zip.entry(source, { name: item.name }, next);
-  //   })
-  //
-  // });
+    // items.forEach(function (item) {
+    //
+    //   wait.for(function (next) {
+    //
+    //     var path = storage.getItemPath(req.Box, item);
+    //     var source = "ABCDEFG"
+    //
+    //     zip.entry(source, { name: item.name }, next);
+    //   })
+    //
+    // });
 
 
-  var source = "ABCDEFG";
+    var source = "ABCDEFG";
 
-  zip.entry(source, { name: "test-file" }, function () {
-    console.log("Zipped test files");
-  });
+    for (let file of fileSet) {
+        console.log(file.name);
+        console.log(file.path);
+        console.log(file.template);
+    }
 
-  zip.finalize();
+    zip.entry(source, {name: "test-directory/test-file"}, function () {
+        console.log("Zipped test files");
+    });
+
+    zip.finalize();
 
 });
 
