@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # Firebase Config File
-src/app/config/firebase-config.ts
+{{firebaseConfigLocation}}

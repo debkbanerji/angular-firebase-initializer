@@ -1,8 +1,8 @@
 let fs = require('fs');
 const path = require('path');
 const http = require('http');
-const ZipStream = require('zip-stream');
-
+const zipStream = require('zip-stream');
+const mustache = require('mustache');
 const express = require('express');
 const router = express.Router();
 
@@ -55,7 +55,7 @@ function readFile(baseDir, dir, fileName) {
         // console.log(fullPath);
         fs.readFile(fullPath, 'utf8', function (err, data) {
             if (err) throw err;
-            templateData = {
+            let templateData = {
                 name: fileName,
                 path: dir,
                 template: data
@@ -69,10 +69,20 @@ readDir(templateFolder, '/');
 
 router.get('/test', function (req, res) {
 
-    res.set('Content-Type', 'application/zip');
-    res.set('Content-Disposition', 'attachment; filename=sample-project.zip');
+    let config = {
+        firebaseConfig: "FIREBASE CONFIG HERE",
+        firebaseConfigLocation: "src/app/config/firebase-config.ts",
+        author: "Deb",
+        projectName: "Apple Timer",
+        projectNameCamelCase: "AppleTimer",
+        projectNameKebabCase: "apple-timer",
+        projectDescription: "A Better Timer (well, not really)"
+    };
 
-    let archive = new ZipStream();
+    res.set('Content-Type', 'application/zip');
+    res.set('Content-Disposition', 'attachment; filename=' + config.projectNameKebabCase + '.zip');
+
+    let archive = new zipStream();
 
     archive.on('error', function (err) {
         throw err;
@@ -80,20 +90,22 @@ router.get('/test', function (req, res) {
 
     archive.pipe(res);
 
-    archiveFilesRecursively(archive, fileSet, 0);
+    archiveFilesRecursively(archive, fileSet, 0, config);
 });
 
 
-function archiveFilesRecursively(archive, files, index) {
+function archiveFilesRecursively(archive, files, index, config) {
     if (index < files.length) {
         let file = files[index];
         if (file.template) { // text file - process template
-            archive.entry(file.template, {name: path.join(file.path, file.name)}, function () {
-                archiveFilesRecursively(archive, files, index + 1);
+            console.log("Rendering " + path.join(file.path, file.name));
+            let output = mustache.render(file.template, config);
+            archive.entry(output, {name: path.join(file.path, file.name)}, function () {
+                archiveFilesRecursively(archive, files, index + 1, config);
             });
         } else { // image file - write raw data
             archive.entry(file.data, {name: path.join(file.path, file.name)}, function () {
-                archiveFilesRecursively(archive, files, index + 1);
+                archiveFilesRecursively(archive, files, index + 1, config);
             });
         }
     } else {

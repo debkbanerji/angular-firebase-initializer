@@ -1,8 +1,8 @@
-# Angular Firebase Project Sample
+# {{projectName}}
 
-This is a sample project off of which to build Firebase applications with authentication and realtime database support using [AngularFire2](https://github.com/angular/angularfire2).
+{{projectDescription}}
 
-Made with ♥ by Deb Banerji
+Created by {{author}}
 
 ## Setup
 
@@ -26,7 +26,7 @@ In order to run the project, you will need to create a Firebase project from the
 You will also need to enable Google authentication. You can also alter the code if you want to use another sign in provider.
 Note that if you are running the application anywhere other than `localhost` you will need to allow login from other URLS through the Firebase Console.
 
-Then create `src/app/config/firebase-config.ts` and fill it out according to the credentials taken from the Firebase console. You can get the config object by clicking "Add Firebase to your web app"
+Then fill out `src/app/config/firebase-config.ts` according to the credentials taken from the Firebase console. You can get the config object by clicking "Add Firebase to your web app"
 
 The contents of the file should look similar to this:
 ```
@@ -61,17 +61,6 @@ For faster (albeit less secure) development, you can also replace the rules with
   }
 }
 ```
-
-### Replacing Placeholders
-
-All placeholders in the application which should be replaced by your own information have been marked by `TODO: replace`.
-The exception is `package.json` and `dist-utility-files/package.json` as JSON does not allow for comments. Don't forget to update those.
-
-#### `TODO: Update package.json files`
-
-Also, don't forget to replace the content of this `README.md` file with your own.
-
-#### `TODO: Replace`
 
 ## Starting The Application
 
@@ -119,3 +108,9 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Other Information
+
+This application was initialized using [Angular Firebase Initializer](https://github.com/debkbanerji)
+
+Made with ♥ by Deb Banerji

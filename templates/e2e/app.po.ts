@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class SampleProjectPage {
+export class {{projectNameCamel}}Page {
   navigateTo() {
     return browser.get('/');
   }

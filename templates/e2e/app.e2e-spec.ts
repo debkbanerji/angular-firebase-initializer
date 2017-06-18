@@ -1,10 +1,10 @@
-import { SampleProjectPage } from './app.po';
+import { {{projectNameCamel}}Page } from './app.po';
 
-describe('sample-project App', () => {
-  let page: SampleProjectPage;
+describe('{{projectNameKebabCase}} App', () => {
+  let page: {{projectNameCamel}}Page;
 
   beforeEach(() => {
-    page = new SampleProjectPage();
+    page = new {{projectNameCamel}}Page();
   });
 
   it('should display message saying app works', () => {
