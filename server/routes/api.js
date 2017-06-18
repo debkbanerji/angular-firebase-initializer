@@ -1,6 +1,7 @@
 let fs = require('fs');
 const path = require('path');
 const http = require('http');
+const ZipStream = require('zip-stream');
 
 const express = require('express');
 const router = express.Router();
@@ -11,91 +12,94 @@ router.get('/', function (req, res) {
 });
 
 
-const testFolder = './test_template';
+blob_extensions = ['ico', 'jpg', 'png', 'svg'];
 const templateFolder = './templates';
 
-// fs.readdir(testFolder, (err, files) => {
-//     files.forEach(file => {
-//         console.log(file);
-//         fs.readFile(path.join(testFolder, file), 'utf8', (err, data) => {
-//             if (err) throw err;
-//             console.log(data);
-//         });
-//     });
-// });
-
-fileSet = new Set();
+fileSet = [];
 
 // Process directory and add each file to set
-function readDir(dir) {
-    console.log(dir);
-    fs.readdir(dir, (err, files) => {
+function readDir(baseDir, dir) {
+    // console.log(dir);
+    fs.readdir(path.join(baseDir, dir), (err, files) => {
         files.forEach(file => {
-            let fullPath = path.join(dir, file);
+            let fullPath = path.join(baseDir, dir, file);
             if (fs.statSync(fullPath).isDirectory()) {
                 // The file is a directory
-                readDir(fullPath);
+                readDir(baseDir, path.join(dir, file));
             } else {
                 // Process file
-                fs.readFile(fullPath, 'utf8', function (err, data) {
-                    if (err) throw err;
-                    console.log('read ' + fullPath);
-                    // console.log(data);
-                });
+                readFile(baseDir, dir, file);
             }
         });
     });
 }
 
 // Add file to set
-function readFile(name, fullPath, content) {
-
+function readFile(baseDir, dir, fileName) {
+    // Check if file is an image
+    let extensionSplit = fileName.split(".");
+    let extension = extensionSplit[extensionSplit.length - 1];
+    let fullPath = path.join(baseDir, dir, fileName);
+    // console.log(extension);
+    if (blob_extensions.indexOf(extension) >= 0) {
+        fs.readFile(fullPath, function (err, data) {
+            if (err) throw err;
+            templateData = {
+                name: fileName,
+                path: dir,
+                data: data
+            };
+            fileSet.push(templateData);
+        });
+    } else {
+        // console.log(fullPath);
+        fs.readFile(fullPath, 'utf8', function (err, data) {
+            if (err) throw err;
+            templateData = {
+                name: fileName,
+                path: dir,
+                template: data
+            };
+            fileSet.push(templateData);
+        });
+    }
 }
 
-readDir(templateFolder);
+readDir(templateFolder, '/');
 
 router.get('/test', function (req, res) {
 
     res.set('Content-Type', 'application/zip');
-    res.set('Content-Disposition', 'attachment; filename=response-file.zip');
+    res.set('Content-Disposition', 'attachment; filename=sample-project.zip');
 
-    var ZipStream = require('zip-stream');
-    var zip = new ZipStream();
+    let archive = new ZipStream();
 
-    zip.on('error', function (err) {
+    archive.on('error', function (err) {
         throw err;
     });
 
-    zip.pipe(res);
+    archive.pipe(res);
 
-    // items.forEach(function (item) {
-    //
-    //   wait.for(function (next) {
-    //
-    //     var path = storage.getItemPath(req.Box, item);
-    //     var source = "ABCDEFG"
-    //
-    //     zip.entry(source, { name: item.name }, next);
-    //   })
-    //
-    // });
-
-
-    var source = "ABCDEFG";
-
-    for (let file of fileSet) {
-        console.log(file.name);
-        console.log(file.path);
-        console.log(file.template);
-    }
-
-    zip.entry(source, {name: "test-directory/test-file"}, function () {
-        console.log("Zipped test files");
-    });
-
-    zip.finalize();
-
+    archiveFilesRecursively(archive, fileSet, 0);
 });
+
+
+function archiveFilesRecursively(archive, files, index) {
+    if (index < files.length) {
+        let file = files[index];
+        if (file.template) { // text file - process template
+            archive.entry(file.template, {name: path.join(file.path, file.name)}, function () {
+                archiveFilesRecursively(archive, files, index + 1);
+            });
+        } else { // image file - write raw data
+            archive.entry(file.data, {name: path.join(file.path, file.name)}, function () {
+                archiveFilesRecursively(archive, files, index + 1);
+            });
+        }
+    } else {
+        archive.finalize();
+    }
+}
 
 
 module.exports = router;
