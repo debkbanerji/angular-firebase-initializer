@@ -1,5 +1,6 @@
 let fs = require('fs');
 const path = require('path');
+const http = require('http');
 
 const express = require('express');
 const router = express.Router();
@@ -10,7 +11,7 @@ router.get('/', function (req, res) {
 });
 
 
-const testFolder = './templates';
+const testFolder = './test_template';
 
 fs.readdir(testFolder, (err, files) => {
   files.forEach(file => {
@@ -21,5 +22,43 @@ fs.readdir(testFolder, (err, files) => {
     });
   });
 });
+
+router.get('/test', function (req, res) {
+
+  res.set('Content-Type', 'application/zip');
+  res.set('Content-Disposition', 'attachment; filename=response-file.zip');
+
+  var ZipStream = require('zip-stream');
+  var zip = new ZipStream();
+
+  zip.on('error', function (err) {
+    throw err;
+  });
+
+  zip.pipe(res);
+
+  // items.forEach(function (item) {
+  //
+  //   wait.for(function (next) {
+  //
+  //     var path = storage.getItemPath(req.Box, item);
+  //     var source = "ABCDEFG"
+  //
+  //     zip.entry(source, { name: item.name }, next);
+  //   })
+  //
+  // });
+
+
+  var source = "ABCDEFG";
+
+  zip.entry(source, { name: "test-file" }, function () {
+    console.log("Zipped test files");
+  });
+
+  zip.finalize();
+
+});
+
 
 module.exports = router;

@@ -26,6 +26,7 @@
     "express": "^4.15.3",
     "fs": "0.0.1-security",
     "rxjs": "^5.1.0",
+    "zip-stream": "^1.2.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
