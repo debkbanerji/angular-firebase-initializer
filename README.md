@@ -1,10 +1,35 @@
-# AngularFirebaseInitializer
+# Angular Firebase Initializer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
+An initializer for creating Firebase applications with authentication and realtime database support using [AngularFire2](https://github.com/angular/angularfire2).
 
-## Development server
+Made with ♥ by Deb Banerji
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli)
+
+## Building The Project
+
+In order to build the project, you will need both [Node.js](https://nodejs.org/en/) and the Node Package Manager (which can be installed alongside Node.js).
+
+You will also need the [Angular CLI](https://github.com/angular/angular-cli) which can be installed through npm by running the following command:
+
+```
+npm install -g @angular/cli
+```
+
+Using `-g` will install the command line interface globally, allowing you to use the `ng` command, which is required to run the development server, as well as build the project.
+
+After you have installed npm, run `npm install` in order to install the remaining dependencies.
+
+## Running The Project
+
+In order to run the application, use `npm start` and navigate to `http://localhost:3000/`
+
+## Using The Angular CLI
+
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Note that this will not start the backend, so unless you are only working with the frontend, you should instead use `npm start` and navigate to `http://localhost:3000/`.
 
 ## Code scaffolding
 

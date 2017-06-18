@@ -2,7 +2,7 @@
 
 {{projectDescription}}
 
-Created by {{author}}
+Made with ♥ by {{author}}
 
 ## Setup
 
