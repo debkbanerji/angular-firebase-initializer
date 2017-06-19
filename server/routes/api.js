@@ -6,11 +6,6 @@ const mustache = require('mustache');
 const express = require('express');
 const router = express.Router();
 
-/* GET api listing. */
-router.get('/', function (req, res) {
-    res.send('api works');
-});
-
 
 blob_extensions = ['ico', 'jpg', 'png', 'svg'];
 const templateFolder = './templates';

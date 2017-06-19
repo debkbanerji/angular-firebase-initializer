@@ -12,7 +12,7 @@ export class HomePageComponent implements OnInit {
 
     // private displayNameObject: FirebaseObjectObservable<any>;
     public displayName: string;
-    public LOGO_URL: any;
+    public LOGO_URL: string;
 
     // constructor(public authService: AuthService, private db: AngularFireDatabase) {
     constructor(public authService: AuthService) {
