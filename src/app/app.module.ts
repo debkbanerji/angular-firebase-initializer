@@ -9,10 +9,14 @@ import {AppComponent} from './app.component';
 import {HomePageComponent} from './home-page/home-page.component';
 import {GenerateComponent} from './generate/generate.component';
 
-const routes: Routes = [ // Array of all routes - modify when adding routes //TODO: Replace
+const routes: Routes = [ // Array of all routes - modify when adding routes
     {path: '', component: HomePageComponent}, // Default route
     {path: 'generate', component: GenerateComponent}
 ];
+//
+// declare var saveAs: any;
+//
+// let fileSaver = saveAs;
 
 @NgModule({
     declarations: [
