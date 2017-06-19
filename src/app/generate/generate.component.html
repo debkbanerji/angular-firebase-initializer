@@ -1,3 +1,31 @@
-<p>
-  generate works!
-</p>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="container-fluid">
+            <div class="panel">
+
+                <form #f="ngForm" (ngSubmit)="generate(f)" novalidate>
+                    <div style="text-align: center">
+                        <input name="projectName" ngModel required #first="ngModel" placeholder="Project Name"
+                               class="form-control">
+                        <input name="projectDescription" ngModel required #first="ngModel"
+                               placeholder="Project Description"
+                               class="form-control">
+                        <input name="author" ngModel required #first="ngModel" placeholder="Author"
+                               class="form-control">
+                        <textarea name="firebaseConfig" ngModel required placeholder="Firebase Configuration Object"
+                                  class="form-control">
+                        </textarea>
+                        <button class="btn btn-danger btn-raised">
+                            Generate
+                        </button>
+                    </div>
+                    <div *ngIf="generatedURL">
+                        <a href="{{generatedURL}}" class="btn btn-danger btn-raised">
+                            Link
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

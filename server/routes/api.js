@@ -62,7 +62,7 @@ function readFile(baseDir, dir, fileName) {
 
 readDir(templateFolder, '/');
 
-router.get('/test', function (req, res) {
+router.get('/project', function (req, res) {
 
     let config = {
         firebaseConfig: `{
