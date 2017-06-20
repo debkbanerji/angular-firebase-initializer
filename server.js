@@ -30,6 +30,11 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || '3000';
 app.set('port', port);
 
+app.use(function(error, req, res, next) {
+	console.log(req.originalUrl, ':', error.stack);
+	res.render('500', { status: 500, url: req.url, title: 'Something broke :(', user: req.user, stateMessage: '', pageState: '' });
+});
+
 /**
  * Create HTTP server.
  */
