@@ -28,12 +28,12 @@ export class GenerateComponent implements OnInit {
                 firebaseConfig: form.value.firebaseConfig,
                 author: form.value.author,
                 projectName: projectName,
-                projectNameCamelCase: this.toTitleCase(projectName),
-                projectNameKebabCase: this.toKebabCase(projectName),
+                // projectNameCamelCase: this.toTitleCase(projectName),
+                // projectNameKebabCase: this.toKebabCase(projectName),
                 projectDescription: form.value.projectDescription
             });
             form.resetForm();
-            this.errorText = 'Generated ' + projectName + '. Check the project\'s README.md for next steps';
+            this.errorText = 'Successfully generated ' + projectName + '! Check the project\'s README.md for next steps';
         } else {
             this.errorText = 'Enter all the required information';
         }
