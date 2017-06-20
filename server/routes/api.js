@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 
 const router = express.Router();
 
+let logProjectsMade = false;
+
 router.use( bodyParser.json() );       // to support JSON-encoded bodies
 router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
@@ -73,15 +75,12 @@ router.post('/generate-project', function (req, res) {
 
     let body = req.body;
 
+    if (!body.firebaseConfig || body.firebaseConfig === '') {
+        body.firebaseConfig = `{YOUR CONFIG OBJECT}`
+    }
+
     let config = {
-        firebaseConfig: body.firebaseConfig | `{
-  apiKey: 'YOUR_API_KEY_HERE',
-  authDomain: 'YOUR_AUTH_DOMAIN_HERE',
-  databaseURL: 'YOUR_DATABASE_URL_HERE',
-  projectId: 'YOUR_PROJECT_ID_HERE',
-  storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
-  messagingSenderId: 'YOUR_MESSENGER_SENDER_ID_HERE'
-}`,
+        firebaseConfig: body.firebaseConfig,
         firebaseConfigLocation: "src/app/config/firebase-config.ts",
         author: body.author,
         projectName: body.projectName,
@@ -110,6 +109,7 @@ function archiveFilesRecursively(archive, files, index, config) {
         let file = files[index];
         if (file.template) { // text file - process template
             let output = mustache.render(file.template, config);
+            output = output.replace(/&quot;/g, '\'').replace(/&#x2F;/g, '/'); // replace statements are for not messing up firebase config data
             archive.entry(output, {name: path.join(file.path, file.name)}, function () {
                 archiveFilesRecursively(archive, files, index + 1, config);
             });
@@ -120,8 +120,9 @@ function archiveFilesRecursively(archive, files, index, config) {
         }
     } else {
         archive.finalize();
-        // TODO: Save record of config?
-        // console.log("Created " + config.projectName);
+        if (logProjectsMade) {
+            // TODO: Save record of config?
+        }
         console.log("Created project with config:");
         console.log(config);
     }
