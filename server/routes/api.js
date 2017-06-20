@@ -133,7 +133,8 @@ function archiveFilesRecursively(archive, files, index, config) {
         if (logProjectsMade) {
             // TODO: Save record of config?
         }
-        console.log("\n\nCreated project with config:");
+        let now = new Date();
+        console.log("\n\nCreated project on " + now);
         console.log(config);
     }
 }
