@@ -4,7 +4,14 @@ const http = require('http');
 const zipStream = require('zip-stream');
 const mustache = require('mustache');
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const router = express.Router();
+
+router.use( bodyParser.json() );       // to support JSON-encoded bodies
+router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+}));
 
 
 blob_extensions = ['ico', 'jpg', 'png', 'svg'];
@@ -39,7 +46,7 @@ function readFile(baseDir, dir, fileName) {
     if (blob_extensions.indexOf(extension) >= 0) {
         fs.readFile(fullPath, function (err, data) {
             if (err) throw err;
-            templateData = {
+            let templateData = {
                 name: fileName,
                 path: dir,
                 data: data
@@ -62,10 +69,12 @@ function readFile(baseDir, dir, fileName) {
 
 readDir(templateFolder, '/');
 
-router.get('/project', function (req, res) {
+router.post('/generate-project', function (req, res) {
+
+    let body = req.body;
 
     let config = {
-        firebaseConfig: `{
+        firebaseConfig: body.firebaseConfig | `{
   apiKey: 'YOUR_API_KEY_HERE',
   authDomain: 'YOUR_AUTH_DOMAIN_HERE',
   databaseURL: 'YOUR_DATABASE_URL_HERE',
@@ -74,11 +83,11 @@ router.get('/project', function (req, res) {
   messagingSenderId: 'YOUR_MESSENGER_SENDER_ID_HERE'
 }`,
         firebaseConfigLocation: "src/app/config/firebase-config.ts",
-        author: "Deb K Banerji",
-        projectName: "Test Project",
-        projectNameCamelCase: "TestProject",
-        projectNameKebabCase: "test-project",
-        projectDescription: "Testing the initializer"
+        author: body.author,
+        projectName: body.projectName,
+        projectNameCamelCase: toTitleCase(body.projectName),
+        projectNameKebabCase: toKebabCase(body.projectName),
+        projectDescription: body.projectDescription
     };
 
     res.set('Content-Type', 'application/zip');
@@ -112,9 +121,18 @@ function archiveFilesRecursively(archive, files, index, config) {
     } else {
         archive.finalize();
         // TODO: Save record of config?
-        console.log("Created " + config.projectName)
+        // console.log("Created " + config.projectName);
+        console.log("Created project with config:");
+        console.log(config);
     }
 }
 
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\s/g, '');
+}
 
+function toKebabCase(str) {
+    return str.replace(/\s+/g, '-').toLowerCase();
+}
 module.exports = router;

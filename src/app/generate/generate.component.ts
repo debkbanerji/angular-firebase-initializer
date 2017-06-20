@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Http, ResponseContentType} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {NgForm} from '@angular/forms';
 declare var saveAs: any;
 
 @Component({
@@ -10,43 +11,60 @@ declare var saveAs: any;
 })
 export class GenerateComponent implements OnInit {
 
-    // private author: string;
-    // private projectName: string;
-    // private projectDescription: string;
-    // private firebaseConfig: any;
     public apiURL: any;
-
+    public errorText: string;
 
     constructor(private http: Http) {
     }
 
     ngOnInit() {
-        this.apiURL = 'api/project';
+        this.apiURL = 'api/generate-project';
     }
 
-    public generate(f) {
-        this.giveUserProject({
-           projectName: 'my-second-project'
-        });
+    public generate(form: NgForm) {
+        if (form.valid) {
+            const projectName = form.value.projectName;
+            const author = form.value.author;
+            this.giveUserProject({
+                firebaseConfig: form.value.firebaseConfig,
+                author: form.value.author,
+                projectName: projectName,
+                projectNameCamelCase: this.toTitleCase(projectName),
+                projectNameKebabCase: this.toKebabCase(projectName),
+                projectDescription: form.value.projectDescription
+            });
+            form.resetForm();
+        } else {
+           this.errorText = 'Enter all the required information';
+        }
+
     }
 
     private giveUserProject(config) {
-        const fileName = config.projectName;
-        console.log(fileName);
         this.getProject(config)
             .subscribe(res => {
-                saveAs(res, fileName + '.zip');
+                saveAs(res, this.toKebabCase(config.projectName) + '.zip');
                 // const fileURL = URL.createObjectURL(res);
                 // window.open(fileURL);
             });
     }
 
     private getProject(config) {
-        return this.http.get(this.apiURL,
+        return this.http.post(this.apiURL, config,
             {responseType: ResponseContentType.Blob})
             .map((res) => {
                 return new Blob([res.blob()], {type: 'application/zip'});
             });
+    }
+
+    private toTitleCase(str) {
+        return str.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }).replace(/\s/g, '');
+    }
+
+    private toKebabCase(str) {
+        return str.replace(/\s+/g, '-').toLowerCase();
     }
 
 }

@@ -5,19 +5,27 @@
 
                 <form #f="ngForm" (ngSubmit)="generate(f)" novalidate>
                     <div style="text-align: center">
-                        <input name="projectName" ngModel required #first="ngModel" placeholder="Project Name"
+                        <input name="projectName" ngModel required #first="ngModel" placeholder="My Project"
                                class="form-control">
                         <input name="projectDescription" ngModel required #first="ngModel"
-                               placeholder="Project Description"
+                               placeholder="An awesome and totally not overhyped project"
                                class="form-control">
-                        <input name="author" ngModel required #first="ngModel" placeholder="Author"
+                        <input name="author" ngModel required #first="ngModel" placeholder="Me"
                                class="form-control">
-                        <textarea name="firebaseConfig" ngModel required placeholder="Firebase Configuration Object"
+                        <textarea name="firebaseConfig" rows="8" ngModel placeholder="{
+    apiKey: 'YOUR_API_KEY_HERE',
+    authDomain: 'YOUR_AUTH_DOMAIN_HERE',
+    databaseURL: 'YOUR_DATABASE_URL_HERE',
+    projectId: 'YOUR_PROJECT_ID_HERE',
+    storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
+    messagingSenderId: 'YOUR_MESSENGER_SENDER_ID_HERE'
+}"
                                   class="form-control">
                         </textarea>
                         <button class="btn btn-danger btn-raised">
                             Generate
                         </button>
+                        <b>{{errorText}}</b>
                     </div>
                 </form>
             </div>
