@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const api = require('./server/routes/api');
 
 const app = express();
-
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(function(error, req, res, next) {
 	console.log(req.originalUrl, ':', error.stack);
@@ -20,7 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
-app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
 app.use('/api', api);
