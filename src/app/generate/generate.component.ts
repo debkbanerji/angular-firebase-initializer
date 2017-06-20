@@ -24,7 +24,6 @@ export class GenerateComponent implements OnInit {
     public generate(form: NgForm) {
         if (form.valid) {
             const projectName = form.value.projectName;
-            const author = form.value.author;
             this.giveUserProject({
                 firebaseConfig: form.value.firebaseConfig,
                 author: form.value.author,
@@ -34,8 +33,9 @@ export class GenerateComponent implements OnInit {
                 projectDescription: form.value.projectDescription
             });
             form.resetForm();
+            this.errorText = 'Generated ' + projectName + '. Check the project\'s README.md for next steps';
         } else {
-           this.errorText = 'Enter all the required information';
+            this.errorText = 'Enter all the required information';
         }
 
     }

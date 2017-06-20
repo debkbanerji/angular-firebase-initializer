@@ -2,17 +2,50 @@
     <div class="col-xs-12">
         <div class="container-fluid">
             <div class="panel">
-
-                <form #f="ngForm" (ngSubmit)="generate(f)" novalidate>
+                <h3>Generate the Base of Your Application</h3>
+            </div>
+            <form #f="ngForm" (ngSubmit)="generate(f)" novalidate>
+                <div class="panel">
                     <div style="text-align: center">
-                        <input name="projectName" ngModel required #first="ngModel" placeholder="My Project"
-                               class="form-control">
-                        <input name="projectDescription" ngModel required #first="ngModel"
-                               placeholder="An awesome and totally not overhyped project"
-                               class="form-control">
-                        <input name="author" ngModel required #first="ngModel" placeholder="Me"
-                               class="form-control">
-                        <textarea name="firebaseConfig" rows="8" ngModel placeholder="{
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2">
+                                <label for="projectName">Project Name</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="projectName" name="projectName" ngModel required #first="ngModel"
+                                       placeholder="My Project"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2">
+                                <label for="projectDescription">Project Description</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="projectDescription" name="projectDescription" ngModel required
+                                       #first="ngModel"
+                                       placeholder="An awesome and totally not overhyped project"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2">
+                                <label for="author">Author</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="author" name="author" ngModel required #first="ngModel" placeholder="Me"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2">
+                                <label for="firebaseConfig">Firebase Configuration Object (Optional)</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10">
+                            <textarea id="firebaseConfig" name="firebaseConfig" rows="8" ngModel placeholder="{
     apiKey: 'YOUR_API_KEY_HERE',
     authDomain: 'YOUR_AUTH_DOMAIN_HERE',
     databaseURL: 'YOUR_DATABASE_URL_HERE',
@@ -20,16 +53,27 @@
     storageBucket: 'YOUR_STORAGE_BUCKET_HERE',
     messagingSenderId: 'YOUR_MESSENGER_SENDER_ID_HERE'
 }"
-                                  class="form-control">
-                        </textarea>
-                        <button class="btn btn-danger btn-raised">
-                            Generate
-                        </button>
-                        <br>
-                        <b>{{errorText}}</b>
+                                      class="form-control">
+                            </textarea>
+                                <b>You can find this by going to the <a href="https://console.firebase.google.com">Firebase
+                                    console</a>, navigating to your project and clicking on 'Add Firebase to your web
+                                    app'</b>
+                                <br>
+                                <b>You can also leave this blank and fill it in later within <code>src/app/config/firebase-config.ts</code></b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button class="btn btn-danger btn-raised">
+                                    Generate
+                                </button>
+                                <br>
+                                <b>{{errorText}}</b>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
