@@ -12,8 +12,6 @@ const router = express.Router();
 
 console.log('Set express router');
 
-let logProjectsMade = false;
-
 console.log('Using body parser');
 
 router.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -130,9 +128,6 @@ function archiveFilesRecursively(archive, files, index, config) {
         }
     } else {
         archive.finalize();
-        if (logProjectsMade) {
-            // TODO: Save record of config?
-        }
         let now = new Date();
         console.log("\n\nCreated project on " + now);
         console.log(config);
