@@ -24,9 +24,11 @@ export class GenerateComponent implements OnInit {
     public generate(form: NgForm) {
         if (form.valid) {
             const projectName = form.value.projectName;
+            const year = new Date().getFullYear();
             this.giveUserProject({
                 firebaseConfig: form.value.firebaseConfig,
                 author: form.value.author,
+                year: year,
                 projectName: projectName,
                 // projectNameCamelCase: this.toTitleCase(projectName),
                 // projectNameKebabCase: this.toKebabCase(projectName),

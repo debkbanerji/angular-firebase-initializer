@@ -92,6 +92,7 @@ router.post('/generate-project', function (req, res) {
         firebaseConfig: body.firebaseConfig,
         firebaseConfigLocation: "src/app/config/firebase-config.ts",
         author: body.author,
+        year: body.year,
         projectName: body.projectName,
         projectNameCamelCase: toTitleCase(body.projectName),
         projectNameKebabCase: toKebabCase(body.projectName),
@@ -118,7 +119,7 @@ function archiveFilesRecursively(archive, files, index, config) {
         let file = files[index];
         if (file.template) { // text file - process template
             let output = mustache.render(file.template, config);
-            output = output.replace(/&quot;/g, '\'').replace(/&#x2F;/g, '/'); // replace statements are for not messing up firebase config data
+            output = parseHtmlEntities(output);
             archive.entry(output, {name: path.join(file.path, file.name)}, function () {
                 archiveFilesRecursively(archive, files, index + 1, config);
             });
@@ -132,7 +133,7 @@ function archiveFilesRecursively(archive, files, index, config) {
         if (logProjectsMade) {
             // TODO: Save record of config?
         }
-        console.log("Created project with config:");
+        console.log("\n\nCreated project with config:");
         console.log(config);
     }
 }
@@ -144,6 +145,11 @@ function toTitleCase(str)
 
 function toKebabCase(str) {
     return str.replace(/\s+/g, '-').toLowerCase();
+}
+
+
+function parseHtmlEntities(str) {
+    return str.replace(/&quot;/g, '\'').replace(/&#x2F;/g, '/').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#39;/g, '\'')
 }
 
 console.log('Exporting router');

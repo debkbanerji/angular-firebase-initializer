@@ -6,7 +6,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng build && node server.js",
-        "develop": "ng serve",
+        "startui": "ng serve",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
