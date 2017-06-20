@@ -9,6 +9,12 @@ const api = require('./server/routes/api');
 
 const app = express();
 
+
+app.use(function(error, req, res, next) {
+	console.log(req.originalUrl, ':', error.stack);
+	res.render('500', { status: 500, url: req.url, title: 'Something broke :(', user: req.user, stateMessage: '', pageState: '' });
+});
+
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,10 +36,6 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || '3000';
 app.set('port', port);
 
-app.use(function(error, req, res, next) {
-	console.log(req.originalUrl, ':', error.stack);
-	res.render('500', { status: 500, url: req.url, title: 'Something broke :(', user: req.user, stateMessage: '', pageState: '' });
-});
 
 /**
  * Create HTTP server.
