@@ -1,6 +1,7 @@
 var express = require("express");
 var os = require('os');
 const path = require('path');
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -40,6 +41,20 @@ Object.keys(ifaces).forEach(function (ifname) {
         ++alias;
     });
 });
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+// app.use("/server.js",function (req, res, next) {
+//     res.redirect("/")
+// });
+
+// app.use(express.static(path.join(__dirname, "app")));
+
+
 
 app.use(express.static('dist'));
 

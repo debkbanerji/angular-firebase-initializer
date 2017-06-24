@@ -94,7 +94,8 @@ router.post('/generate-project', function (req, res) {
         projectName: body.projectName,
         projectNameCamelCase: toTitleCase(body.projectName),
         projectNameKebabCase: toKebabCase(body.projectName),
-        projectDescription: body.projectDescription
+        projectDescription: body.projectDescription,
+        color: "blue"
     };
 
     res.set('Content-Type', 'application/zip');

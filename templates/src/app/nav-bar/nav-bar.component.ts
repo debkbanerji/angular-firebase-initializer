@@ -1,5 +1,4 @@
 import {Component, OnInit, ApplicationRef, OnDestroy} from '@angular/core';
-
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {AuthService} from '../providers/auth.service';
@@ -21,23 +20,22 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // TODO: Replace
         this.navBarItems = [
             {
                 route: '',
                 text: 'Home'
             },
             {
-                route: 'text-posts',
-                text: 'Text Posts'
+                route: 'posts',
+                text: 'Posts'
             },
             {
                 route: 'friends',
                 text: 'Friends'
             },
             {
-                route: 'settings',
-                text: 'Settings'
+                route: 'profile',
+                text: 'Profile'
             },
             {
                 route: 'logout', // Not actual route - caught by 'navigateTo' function
@@ -72,8 +70,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.routerSubscription) {
-            this.routerSubscription.unsubscribe();
-        }
+        this.routerSubscription.unsubscribe();
     }
 }

@@ -41,6 +41,8 @@ export const config = {
 ```
 #### Publishing Rules
 
+##### Realtime Database
+
 The default Firebase realtime database rules are as follows:
 ```
 {
@@ -62,9 +64,36 @@ For faster (albeit less secure) development, you can also replace the rules with
 }
 ```
 
+##### Storage
+
+The default Firebase storage rules are as follows:
+
+```
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
+For increased security, it is recommended that you replace these rules with those defined in `firebase-storage-rules`.
+
+For faster (albeit less secure) development, you can also replace the rules with:
+```
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write;
+    }
+  }
+}
+```
+
 ## Starting The Application in a Development Environment
 
-You can start a development server by running `npm develop` and navigating to `http://localhost:4200/` The app will automatically reload if you change any of the source files.
+You can start a development server by running `npm run develop` and navigating to `http://localhost:4200/` The app will automatically reload if you change any of the source files.
 Note that this is simply a wrapper around `ng serve`.
 
 ## Building The Application
@@ -115,6 +144,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Other Information
 
-This application was initialized using [Angular Firebase Initializer](https://github.com/debkbanerji)
+This application was initialized using [Angular Firebase Initializer](http://generator.debkbanerji.com/)
 
-Made with ♥ by Deb Banerji
+Made with ♥ by [Deb Banerji](http://debkbanerji.com/)

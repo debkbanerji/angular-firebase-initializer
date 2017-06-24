@@ -1,16 +1,16 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 
-import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
+import {AngularFireDatabase} from 'angularfire2/database';
 
 import {AuthService} from '../providers/auth.service';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
     selector: 'app-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.css']
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.css']
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit, OnDestroy {
 
     private userProfileSubscription: Subscription;
 
