@@ -44,7 +44,7 @@ export class GenerateComponent implements OnInit {
                 name: "Green"
             },
             {
-                code: "#64dd17",
+                code: "#4fab15",
                 name: "Lime Green"
             },
             {
@@ -64,7 +64,7 @@ export class GenerateComponent implements OnInit {
                 name: "Grey"
             },
             {
-                code: "#fcd837",
+                code: "#c6aa2d",
                 name: "Yellow"
             }
         ];
@@ -73,17 +73,12 @@ export class GenerateComponent implements OnInit {
     public generate(form: NgForm) {
         if (form.valid) {
             const projectName = form.value.projectName;
-            const year = new Date().getFullYear();
-            // let projectColor;
-            // if (!form.value.projectColor || form.value.projectColor === "") {
-            //     projectColor = "#f55549"
-            // } else {
-            //     form.value.projectColor = projectColor;
-            // }
+            let date = new Date();
             this.giveUserProject({
                 firebaseConfig: form.value.firebaseConfig,
                 author: form.value.author,
-                year: year,
+                year: date.getFullYear(),
+                timeString: date.toLocaleString(),
                 projectName: projectName,
                 // projectNameCamelCase: this.toTitleCase(projectName),
                 // projectNameKebabCase: this.toKebabCase(projectName),

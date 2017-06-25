@@ -144,6 +144,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Other Information
 
-This application was initialized using [Angular Firebase Initializer](http://generator.debkbanerji.com/)
+This application was initialized using [Angular Firebase Initializer](http://generator.debkbanerji.com/) on {{timeString}}
 
 Made with ♥ by [Deb Banerji](http://debkbanerji.com/)

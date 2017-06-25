@@ -91,6 +91,7 @@ router.post('/generate-project', function (req, res) {
         firebaseConfigLocation: "src/app/config/firebase-config.ts",
         author: body.author,
         year: body.year,
+        timeString: body.timeString,
         projectName: body.projectName,
         projectNameCamelCase: toTitleCase(body.projectName),
         projectNameKebabCase: toKebabCase(body.projectName),
