@@ -11,15 +11,17 @@ declare let saveAs: any;
 })
 export class GenerateComponent implements OnInit {
 
-    public apiURL: any;
+    private apiURL: any;
+    public DOWN_ARROW_URL: string;
     public errorText: string;
-    private colors: any;
+    public colors: any;
 
     constructor(private http: Http) {
     }
 
     ngOnInit() {
         this.apiURL = 'api/generate-project';
+        this.DOWN_ARROW_URL = '/assets/images/down_arrow.png';
         this.colors = [
             {
                 code: "#d9534f",
@@ -65,11 +67,10 @@ export class GenerateComponent implements OnInit {
                 code: "#fcd837",
                 name: "Yellow"
             }
-        ]
+        ];
     }
 
     public generate(form: NgForm) {
-        console.log(form.value);
         if (form.valid) {
             const projectName = form.value.projectName;
             const year = new Date().getFullYear();
