@@ -54,7 +54,7 @@
                                 <!--class="form-control">-->
                                 <!--&lt;!&ndash;TODO: Switch to dropdown&ndash;&gt;-->
                                 <!--<select id="projectColor" name="projectColor" ngModel required ngStyle="background-image: url({{DOWN_ARROW_URL}}), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);">-->
-                                <select id="projectColor" name="projectColor" ngModel="selectedColor" required>
+                                <select id="projectColor" name="projectColor" ngModel required>
                                     <option *ngFor="let x of colors" [ngValue]="x.code">{{x.name}}</option>
                                 </select>
                             </div>
