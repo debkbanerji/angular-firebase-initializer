@@ -43,7 +43,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-console.log("Catching all other routes and return the index file");
+console.log("Catching all other routes and returning the index file");
 
 /**
  * Create HTTP server.

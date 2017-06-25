@@ -13,7 +13,7 @@ export class GenerateComponent implements OnInit {
 
     private apiURL: any;
     public DOWN_ARROW_URL: string;
-    public errorText: string;
+    public submitText: string;
     public colors: any;
 
     constructor(private http: Http) {
@@ -91,9 +91,9 @@ export class GenerateComponent implements OnInit {
                 projectColor: form.value.projectColor
             });
             form.resetForm();
-            this.errorText = 'Successfully generated ' + projectName + '! Check the project\'s README.md for next steps';
+            this.submitText = 'Successfully generated ' + projectName + '! Check the project\'s README.md for next steps';
         } else {
-            this.errorText = 'Enter all the required information';
+            this.submitText = 'Enter all the required information';
         }
 
     }
