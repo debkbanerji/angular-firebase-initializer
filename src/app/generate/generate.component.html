@@ -44,6 +44,23 @@
                         <hr>
                         <div class="row">
                             <div class="col-xs-12 col-sm-2">
+                                <label for="projectColor">Nav Bar and Button Color</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-10">
+                                <!--<input id="projectColor" name="projectColor" ngModel required-->
+                                       <!--type="color"-->
+                                       <!--#first="ngModel"-->
+                                       <!--placeholder="#f55549"-->
+                                       <!--class="form-control">-->
+                                <!--&lt;!&ndash;TODO: Switch to dropdown&ndash;&gt;-->
+                                <select id="projectColor" name="projectColor" ngModel required>
+                                    <option *ngFor="let x of colors" [ngValue]="x.code" >{{x.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2">
                                 <label for="firebaseConfig">Firebase Configuration Object (Optional)</label>
                             </div>
                             <div class="col-xs-12 col-sm-10">

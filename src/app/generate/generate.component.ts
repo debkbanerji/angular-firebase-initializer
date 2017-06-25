@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Http, ResponseContentType} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {NgForm} from '@angular/forms';
-declare var saveAs: any;
+declare let saveAs: any;
 
 @Component({
     selector: 'app-generate',
@@ -13,18 +13,72 @@ export class GenerateComponent implements OnInit {
 
     public apiURL: any;
     public errorText: string;
+    private colors: any;
 
     constructor(private http: Http) {
     }
 
     ngOnInit() {
         this.apiURL = 'api/generate-project';
+        this.colors = [
+            {
+                code: "#d9534f",
+                name: "Red"
+            },
+            {
+                code: "#ff5722",
+                name: "Orange"
+            },
+            {
+                code: "#5bc0de",
+                name: "Light Blue"
+            },
+            {
+                code: "#428bca",
+                name: "Dark Blue"
+            },
+            {
+                code: "#5cb85c",
+                name: "Green"
+            },
+            {
+                code: "#64dd17",
+                name: "Lime Green"
+            },
+            {
+                code: "#00897b",
+                name: "Teal"
+            },
+            {
+                code: "#ef4581",
+                name: "Pink"
+            },
+            {
+                code: "#783393",
+                name: "Purple"
+            },
+            {
+                code: "#757575",
+                name: "Grey"
+            },
+            {
+                code: "#fcd837",
+                name: "Yellow"
+            }
+        ]
     }
 
     public generate(form: NgForm) {
+        console.log(form.value);
         if (form.valid) {
             const projectName = form.value.projectName;
             const year = new Date().getFullYear();
+            // let projectColor;
+            // if (!form.value.projectColor || form.value.projectColor === "") {
+            //     projectColor = "#f55549"
+            // } else {
+            //     form.value.projectColor = projectColor;
+            // }
             this.giveUserProject({
                 firebaseConfig: form.value.firebaseConfig,
                 author: form.value.author,
@@ -32,7 +86,8 @@ export class GenerateComponent implements OnInit {
                 projectName: projectName,
                 // projectNameCamelCase: this.toTitleCase(projectName),
                 // projectNameKebabCase: this.toKebabCase(projectName),
-                projectDescription: form.value.projectDescription
+                projectDescription: form.value.projectDescription,
+                projectColor: form.value.projectColor
             });
             form.resetForm();
             this.errorText = 'Successfully generated ' + projectName + '! Check the project\'s README.md for next steps';
