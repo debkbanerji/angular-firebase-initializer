@@ -1,5 +1,7 @@
 # Angular Firebase Initializer
 
+![Logo](src/assets/images/logo.png)
+
 An initializer for creating Firebase applications with authentication and realtime database support using [AngularFire2](https://github.com/angular/angularfire2).
 
 Made with ♥ by Deb Banerji
