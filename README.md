@@ -6,7 +6,7 @@ An initializer for creating Firebase applications with authentication and realti
 
 Made with ♥ by Deb Banerji
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli)
+If you are interested in using, but not contributing to the application, you can find a deployed version at [generator.debkbanerji.com](http://generator.debkbanerji.com/).
 
 ## Building The Project
 
