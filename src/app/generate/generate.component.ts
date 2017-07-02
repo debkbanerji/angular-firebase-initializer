@@ -15,6 +15,7 @@ export class GenerateComponent implements OnInit {
     public DOWN_ARROW_URL: string;
     public submitText: string;
     public colors: any;
+    public errorText: string;
 
     constructor(private http: Http) {
     }

@@ -7,8 +7,8 @@ import {Router} from '@angular/router';
     styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-    private ANGULAR_LOGO_URL: string;
-    private FIREBASE_LOGO_URL: string;
+    public ANGULAR_LOGO_URL: string;
+    public FIREBASE_LOGO_URL: string;
 
     constructor(private router: Router) {
 
