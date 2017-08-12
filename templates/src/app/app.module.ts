@@ -11,6 +11,19 @@ import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 
+// Angular Material Imports
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdInputModule,
+    MdProgressBarModule,
+    MdProgressSpinnerModule, MdSidenavModule, MdSlideToggleModule, MdSnackBarModule, MdSortModule, MdTableModule,
+    MdTabsModule,
+    MdToolbarModule,
+    MdTooltipModule
+} from '@angular/material';
+import 'hammerjs';
+
+
 import {AppComponent} from './app.component';
 import {AuthService} from './providers/auth.service';
 import {LoginPageComponent} from './login-page/login-page.component';
@@ -23,6 +36,7 @@ import {FriendsComponent} from './friends/friends.component';
 import {AddFriendsComponent} from './add-friends/add-friends.component';
 import {FriendRequestsComponent} from './friend-requests/friend-requests.component';
 import {ChatComponent} from './chat/chat.component';
+import {CdkTableModule} from '@angular/cdk';
 
 const routes: Routes = [ // Array of all routes - modify when adding routes //TODO: Replace
     {path: '', component: HomePageComponent}, // Default route
@@ -54,6 +68,22 @@ const routes: Routes = [ // Array of all routes - modify when adding routes //TO
         HttpModule,
         NgArrayPipesModule,
         AngularFireModule.initializeApp(config),
+        MdButtonModule,
+        MdProgressBarModule,
+        MdProgressSpinnerModule,
+        MdCardModule,
+        MdChipsModule,
+        MdTooltipModule,
+        MdToolbarModule,
+        MdSidenavModule,
+        MdTabsModule,
+        MdSlideToggleModule,
+        MdCheckboxModule,
+        MdSnackBarModule,
+        MdInputModule,
+        MdTableModule,
+        CdkTableModule,
+        MdSortModule,
         Ng2FileInputModule.forRoot(),
         RouterModule.forRoot(routes)
     ],
