@@ -5,6 +5,21 @@ const zipStream = require('zip-stream');
 const mustache = require('mustache');
 const express = require('express');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+const mg = require('nodemailer-mailgun-transport');
+
+let sendEmails = false;
+let emailCredentials;
+let transporter;
+try {
+    emailCredentials = JSON.parse(fs.readFileSync('email-credentials.json'));
+    const auth = emailCredentials.auth;
+
+    transporter = nodemailer.createTransport(mg({auth: auth}));
+    sendEmails = true;
+} catch (err) {
+    console.log(err);
+}
 
 console.log('Running api.js');
 
@@ -14,7 +29,7 @@ console.log('Set express router');
 
 console.log('Using body parser');
 
-router.use( bodyParser.json() );       // to support JSON-encoded bodies
+router.use(bodyParser.json());       // to support JSON-encoded bodies
 router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
@@ -111,6 +126,25 @@ router.post('/generate-project', function (req, res) {
     archive.pipe(res);
 
     archiveFilesRecursively(archive, fileSet, 0, config);
+
+    if (sendEmails) {
+        const mailOptions = {
+            from: emailCredentials.from,
+            to: emailCredentials.to,
+            subject: 'Generated Project: ' + body.projectName,
+            text: JSON.stringify(config, null, 4)
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent');
+                console.log(info);
+            }
+        });
+    }
 });
 
 
@@ -136,9 +170,10 @@ function archiveFilesRecursively(archive, files, index, config) {
     }
 }
 
-function toTitleCase(str)
-{
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}).replace(/\s/g, '');
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }).replace(/\s/g, '');
 }
 
 function toKebabCase(str) {

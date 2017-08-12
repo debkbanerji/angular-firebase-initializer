@@ -20,16 +20,23 @@ console.log("Node server running on port " + port)
 app.use(express.static(path.join(__dirname, 'dist')));
 console.log("Serving static from dist");
 
-app.use(function(error, req, res, next) {
-	console.log(req.originalUrl, ':', error.stack);
-	res.render('500', { status: 500, url: req.url, title: 'Something broke :(', user: req.user, stateMessage: '', pageState: '' });
+app.use(function (error, req, res, next) {
+    console.log(req.originalUrl, ':', error.stack);
+    res.render('500', {
+        status: 500,
+        url: req.url,
+        title: 'Something broke :(',
+        user: req.user,
+        stateMessage: '',
+        pageState: ''
+    });
 });
 
 console.log("Using error logging");
 
 // Parsers for POST data
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 console.log("Using body parser");
 
@@ -40,7 +47,7 @@ console.log("Setting api routes");
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 console.log("Catching all other routes and returning the index file");

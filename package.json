@@ -8,7 +8,7 @@
         "start": "ng build -prod -aot=false && node server.js ",
         "startui": "ng serve",
         "build": "ng build",
-        "build-prod": "rm -rf prod-dist && ng build -prod -aot=false && mkdir prod-dist && cp dist -r prod-dist/dist && cp distribution-package.json prod-dist/package.json && cp .gitignore prod-dist/.gitignore && cp server.js prod-dist/server.js && cp -r server prod-dist/server && cp -r templates prod-dist/templates",
+        "build-prod": "rm -rf prod-dist && ng build -prod -aot=false && mkdir prod-dist && cp dist -r prod-dist/dist && cp distribution-package.json prod-dist/package.json && cp production-.gitignore prod-dist/.gitignore && cp server.js prod-dist/server.js && cp -r server prod-dist/server && cp -r templates prod-dist/templates && cp email-credentials.json prod-dist/email-credentials.json",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
@@ -16,9 +16,9 @@
     "private": true,
     "dependencies": {
         "@angular/cli": "1.0.3",
-        "@angular/compiler-cli": "^4.0.0",
         "@angular/common": "^4.0.0",
         "@angular/compiler": "^4.0.0",
+        "@angular/compiler-cli": "^4.0.0",
         "@angular/core": "^4.0.0",
         "@angular/forms": "^4.0.0",
         "@angular/http": "^4.0.0",
@@ -30,6 +30,8 @@
         "express": "^4.15.3",
         "fs": "0.0.1-security",
         "mustache": "^2.3.0",
+        "nodemailer": "latest",
+        "nodemailer-mailgun-transport": "^1.3.5",
         "rxjs": "^5.1.0",
         "zip-stream": "^1.2.0",
         "zone.js": "^0.8.4"
