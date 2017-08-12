@@ -5,9 +5,10 @@
     "author": "Deb Banerji",
     "scripts": {
         "ng": "ng",
-        "start": "ng build -prod && node server.js",
+        "start": "ng build -prod -aot=false && node server.js ",
         "startui": "ng serve",
         "build": "ng build",
+        "build-prod": "rm -rf prod-dist && ng build -prod -aot=false && mkdir prod-dist && cp dist -r prod-dist/dist && cp distribution-package.json prod-dist/package.json && cp .gitignore prod-dist/.gitignore && cp server.js prod-dist/server.js && cp -r server prod-dist/server && cp -r templates prod-dist/templates",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"

@@ -1,0 +1,20 @@
+{
+    "name": "angular-firebase-initializer",
+    "version": "1.0.0",
+    "license": "MIT",
+    "author": "Deb Banerji",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "private": true,
+    "dependencies": {
+        "body-parser": "^1.17.2",
+        "core-js": "^2.4.1",
+        "express": "^4.15.3",
+        "fs": "0.0.1-security",
+        "mustache": "^2.3.0",
+        "rxjs": "^5.1.0",
+        "zip-stream": "^1.2.0",
+        "zone.js": "^0.8.4"
+    }
+}
