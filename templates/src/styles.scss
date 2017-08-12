@@ -24,6 +24,10 @@ body {background-color: #EEEEEE}
     background-color: {{projectColor}};
 }
 
+.btn-custom {
+    margin-top: 10px !important; margin-bottom: 10px !important;
+}
+
 .btn-group-vertical.open > .dropdown-toggle.btn.btn-custom, .btn-group.open > .dropdown-toggle.btn.btn-custom {
     background-color: {{projectColor}}
 }
