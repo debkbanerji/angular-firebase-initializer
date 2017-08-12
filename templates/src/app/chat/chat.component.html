@@ -33,8 +33,10 @@
                 <form #f="ngForm" (ngSubmit)="sendMessage(f)" novalidate>
                     <!--<div class="form-group">-->
                     <div class="input-group">
-                        <input name="text" ngModel required #first="ngModel" placeholder="Type a message..."
-                               class="form-control">
+                        <md-input-container>
+                            <input name="text" ngModel mdInput required #first="ngModel" placeholder="Type a message"
+                                   class="form-control">
+                        </md-input-container>
                         <span class="input-group-btn">
                             <button md-raised-button class="btn btn-raised btn-custom"><i class="glyphicon glyphicon-send"></i>
                             </button>

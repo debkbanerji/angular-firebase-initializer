@@ -24,8 +24,10 @@
             <div class="panel">
                 <h1>Add Friends</h1>
                 <form #f="ngForm" (ngSubmit)="onSearch(f)" novalidate>
-                    <input name="email" ngModel required #first="ngModel" placeholder="Friend's email address"
-                           class="form-control" type="email">
+                    <md-input-container>
+                        <input name="email" ngModel mdInput required #first="ngModel" placeholder="Friend's email address"
+                               class="form-control" type="email">
+                    </md-input-container>
                     <button md-raised-button class="btn btn-raised btn-custom">Search</button>
                 </form>
             </div>

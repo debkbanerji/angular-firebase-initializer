@@ -68,6 +68,8 @@ const routes: Routes = [ // Array of all routes - modify when adding routes //TO
         HttpModule,
         NgArrayPipesModule,
         AngularFireModule.initializeApp(config),
+        BrowserAnimationsModule,
+        MdAutocompleteModule,
         MdButtonModule,
         MdProgressBarModule,
         MdProgressSpinnerModule,
