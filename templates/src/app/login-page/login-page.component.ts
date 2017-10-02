@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, NgZone} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AngularFireDatabase} from 'angularfire2/database';
@@ -15,7 +15,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private userDataSubscription: Subscription;
     public LOGO_URL: string;
 
-    constructor(public authService: AuthService, private db: AngularFireDatabase, private router: Router) {
+    constructor(public authService: AuthService, private db: AngularFireDatabase, private router: Router, private ngZone: NgZone) {
     }
 
     ngOnInit() {
@@ -24,6 +24,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     }
 
     loginWithGoogle() {
+        const component = this;
         this.authService.loginWithGoogle().then((loginData) => {
             this.authService.afAuth.auth.onAuthStateChanged((auth) => {
                 if (auth != null) {
@@ -34,7 +35,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
                         'display-name': auth.displayName,
                         'photo-url': auth.photoURL
                     }).then(_ => {
-                        this.router.navigate(['']);
+                        component.ngZone.run(function () {
+                            component.router.navigate(['']);
+                        });
                     });
                 }
             });
