@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 export class HomePageComponent implements OnInit {
     public ANGULAR_LOGO_URL: string;
     public FIREBASE_LOGO_URL: string;
+    public platformName = '{{templyte}}';
 
     constructor(private router: Router) {
 
