@@ -10,8 +10,8 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {GenerateComponent} from './generate/generate.component';
 
 const routes: Routes = [ // Array of all routes - modify when adding routes
-    {path: '', component: HomePageComponent}, // Default route
-    {path: 'generate', component: GenerateComponent}
+    {path: '', component: HomePageComponent, pathMatch: 'full' }, // Default route
+    {path: 'generate', component: GenerateComponent, pathMatch: 'full' }
 ];
 //
 // declare var saveAs: any;
